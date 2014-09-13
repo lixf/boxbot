@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
                 <View
+                    android:layout_height="0dp"
                     android:layout_width="0dp"
                     android:layout_weight="1" />
                 <TextView
@@ -53,18 +54,19 @@
                         android:background="#00ff00" />
                 </RelativeLayout>
                 <View
+                    android:layout_height="0dp"
                     android:layout_width="0dp"
                     android:layout_weight="8" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- Bot View -->
-        <View
+        <RelativeLayout
             android:id="@+id/bot_view"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="16">
-        </View>
+        </RelativeLayout>
 
         <!-- Buttons -->
         <LinearLayout

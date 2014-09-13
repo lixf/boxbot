@@ -1,20 +1,29 @@
 package com.boxbot.android;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 public class HomeActivity extends ActionBarActivity {
 
-	private View bot_view;
+	private RelativeLayout bot_view;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		// find the content view
+		bot_view = (RelativeLayout) findViewById( R.id.bot_view ); 		
+		BoxBotView bbView = new BoxBotView(this);
+		bot_view.addView(bbView);
 	}
 	
 	@Override
