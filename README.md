@@ -1,4 +1,6 @@
-hackCMU-2014
+BoxBot
 ============
 
-hackCMU-2014
+An augmented reality phone game.
+
+Built at HackCMU 2014.
