@@ -14,6 +14,16 @@ public class HomeActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// Greet user in the Action Bar title
+		StringBuilder name = new StringBuilder("Welcome ");
+		name.append("[ username ]");
+		this.getActionBar().setTitle(name.toString());
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
