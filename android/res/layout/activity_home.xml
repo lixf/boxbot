@@ -92,7 +92,7 @@
                 <ImageButton
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/play"
                     android:onClick="buttonClick_map" />
@@ -113,7 +113,7 @@
                 <ImageButton
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/favs"
                     android:onClick="buttonClick_friends" />
@@ -134,7 +134,7 @@
                 <ImageButton
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/share"
                     android:onClick="buttonClick_parts" />
@@ -155,7 +155,7 @@
                 <ImageButton
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/settings"
                     android:onClick="buttonClick_settings" />
