@@ -4,5 +4,9 @@
     <string name="app_name">BoxBot</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_friend_list">FriendList</string>
+    <string name="title_activity_part_config">PartConfig</string>
 
 </resources>

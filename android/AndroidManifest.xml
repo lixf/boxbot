@@ -22,6 +22,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.boxbot.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.boxbot.android.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".FriendList"
+            android:label="@string/title_activity_friend_list"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.boxbot.android.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".PartConfig"
+            android:label="@string/title_activity_part_config"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.boxbot.android.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
