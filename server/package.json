@@ -2,8 +2,9 @@
   "name": "boxbot-server",
   "version": "0.0.1",
   "description": "Server for BoxBot app.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/lixf/boxbot",
   "dependencies": {
     "express": "^4.9.0",
+    "lodash": "^2.4.1",
     "mongodb": "^1.4.10"
   }
 }
