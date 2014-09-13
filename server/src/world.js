@@ -26,15 +26,17 @@ function startSimulation () {
   });
 }
 
-function random (low, high) {
-  return Math.random() * (high - low) + low;
+function randomFloat (low, high) {
+  return (Math.random() * (high - low)) + low;
 }
 
 function randomInt (low, high) {
-  return Math.floor(Math.random() * (high - low) + low);
+  return Math.floor((Math.random() * (high - low)) + low);
 }
 
 function populateRegion(region, prototypes, item_type) {
+  console.log("Populating " + region.name + " (rid=" + region.rid + ") with " + item_type + "...");
+
   // sort by ascending probability
   prototypes = _.sortBy(prototypes, function (p) {
     return p.probability;
@@ -59,13 +61,13 @@ function populateRegion(region, prototypes, item_type) {
   for (var i = 0; i < num; i++) {
     // figure out what prototype to use
     var prob = Math.random(0, 1);
-    var it = _.find(dist, function (p) {
+    var it = _.clone(_.find(dist, function (p) {
       return prob <= p.pvalue;
-    });
+    }), true);
 
     // generate location
-    it.lat = Math.random(region.start_lat, region.end_lat);
-    it.lng = Math.random(region.start_lng, region.end_lng);
+    it.lat = randomFloat(region.start_lat, region.end_lat);
+    it.lng = randomFloat(region.start_lng, region.end_lng);
 
     // create item id
     it.iid = uuid.v4();

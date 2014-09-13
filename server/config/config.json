@@ -1,6 +1,9 @@
 {
   "db": {
-    "url": "mongodb://127.0.0.1:27017/world"
+    "users": "",
+    "regions": "mongodb://127.0.0.1:27017/regions",
+    "prototypes": "mongodb://127.0.0.1:27017/prototypes",
+    "battle_logs": ""
   },
   "world": {
     "regions": [
