@@ -9,6 +9,8 @@ import android.view.View;
 
 public class HomeActivity extends ActionBarActivity {
 
+	private View bot_view;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
