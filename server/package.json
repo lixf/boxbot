@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/lixf/boxbot",
   "dependencies": {
+    "body-parser": "^1.8.1",
     "express": "^4.9.0",
     "lodash": "^2.4.1",
     "mongodb": "^1.4.10",
+    "morgan": "^1.3.0",
     "node-uuid": "^1.4.1"
   }
 }

@@ -17,14 +17,29 @@ function DB () {
   );
 }
 
-DB.prototype.addItemsToRegion = function (rid, items) {
+DB.prototype.addItemsToRegion = function (rid, items, callback) {
   region_items[rid] = region_items[rid].concat(items);
-}
+  callback(null);
+};
 
-DB.prototype.removeItemFromRegion = function (rid, iid) {
+DB.prototype.removeItemFromRegion = function (rid, iid, callback) {
   region_items[rid] = _.filter(region_items[rid], function (i) {
     return i.iid != iid; 
   });
-}
+  callback(null);
+};
+
+DB.prototype.getRegionItems = function (rid, callback) {
+  return callback(null, region_items[rid]);
+};
+
+DB.prototype.getRegionByPosition = function (lat, lng, callback) {
+  var region = _.find(config.world.regions, function (r) {
+    // TODO: won't work for places that cross signs for longitude or lattitude
+    return r.start_lat <= lat && r.end_lat >= lat &&
+      r.start_lng <= lng && r.end_lng >= lng;
+  });
+  callback(null, region);
+};
 
 module.exports = DB;
