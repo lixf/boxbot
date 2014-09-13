@@ -32,6 +32,9 @@ node_modules
 .DS_Store
 *.swp
 
+# DB
+server/data/*
+
 ## Android
 # Built application files
 *.apk
