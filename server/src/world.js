@@ -18,10 +18,10 @@ function startSimulation () {
     _.map(config.item_prototypes, function (list, item_type) {
       populateRegion(region, list, item_type)
 
-      // add new objects every 10 seconds
+      // add new objects every 30 seconds
       setInterval(function () {
         populateRegion(region, list, item_type)
-      }, 10000);
+      }, 30000);
     });
   });
 }

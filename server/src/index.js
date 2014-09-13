@@ -1,8 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var timeout = require('connect-timeout');
 
 var world = require('./world.js');
+var arena = require('./arena.js');
 
 // start world
 world.startSimulation();
@@ -12,6 +14,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
+app.use(timeout(10000)); // 10 second timeout
 app.use(function (err, req, res, next) {
   // catch middleware errors
   if (err) {
@@ -20,6 +23,11 @@ app.use(function (err, req, res, next) {
   }
   next();
 });
+app.use(function (req, res, next) {
+  if (!req.timedout) {
+    next();
+  }
+});
 
 // set up routes
 app.get('/', function(req, res) {
@@ -27,6 +35,7 @@ app.get('/', function(req, res) {
 });
 app.post('/api/getRegionItems', world.getRegionItems);
 app.post('/api/claimItem', world.claimItem);
+app.post('/api/battle', arena.battle);
 app.post('/api/*', function (req, res) {
   res.send(404);
 });

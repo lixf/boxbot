@@ -75,6 +75,36 @@ API will always repsond with one of the following HTTP status codes in the event
   - HTTP 200 Status Code: Item claimed by the user successfully
   - HTTP 410 Status Code: The item has been claimed by another user.
 
+## POST /api/battle
+
+Uses long polling to pair players up for battle.
+
+- Sample Request:
+
+```
+{
+  "uid": 1234,
+  "opponent_uid": 5678
+}
+```
+
+- Sample Response:
+
+```
+{
+  "winner": {
+    "uid": 5678,
+    "hp_loss": -0.6572287527378649
+  },
+  "loser": {
+    "uid": 1234,
+    "hp_loss": -0.9546690152492374
+  }
+}
+```
+
+- Error Response:
+  - HTTP 410 Status Code: Opponent has disconnected from the battle already.
 
 # Data Types
 
