@@ -16,18 +16,33 @@
 
 package com.boxbot.android;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URI;
+import java.net.URL;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -40,120 +55,178 @@ import android.widget.Toast;
  * {@link LocationClient}.
  */
 public class MapActivity extends FragmentActivity
-        implements
-        ConnectionCallbacks,
-        OnConnectionFailedListener,
-        LocationListener,
-        OnMyLocationButtonClickListener {
+implements
+ConnectionCallbacks,
+OnConnectionFailedListener,
+LocationListener,
+OnMyLocationButtonClickListener {
 
-    private GoogleMap mMap;
+	private GoogleMap mMap;
 
-    private LocationClient mLocationClient;
-    private TextView mMessageView;
+	private String url = "http://192.168.1.8:8080/api/getRegionItems";
+	HttpURLConnection connection = null;
 
-    // These settings are the same as the settings for the map. They will in fact give you updates
-    // at the maximal rates currently possible.
-    private static final LocationRequest REQUEST = LocationRequest.create()
-            .setInterval(5000)         // 5 seconds
-            .setFastestInterval(16)    // 16ms = 60fps
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+	private LocationClient mLocationClient;
+	private TextView mMessageView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        mMessageView = (TextView) findViewById(R.id.message_text);
-    }
+	// These settings are the same as the settings for the map. They will in fact give you updates
+	// at the maximal rates currently possible.
+	private static final LocationRequest REQUEST = LocationRequest.create()
+			.setInterval(5000)         // 5 seconds
+			.setFastestInterval(16)    // 16ms = 60fps
+			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-        setUpLocationClientIfNeeded();
-        mLocationClient.connect();
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_map);
+		mMessageView = (TextView) findViewById(R.id.message_text);
+	}
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mLocationClient != null) {
-            mLocationClient.disconnect();
-        }
-    }
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setUpMapIfNeeded();
+		setUpLocationClientIfNeeded();
+		mLocationClient.connect();
+	}
 
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                mMap.setMyLocationEnabled(true);
-                mMap.setOnMyLocationButtonClickListener(this);
-            }
-        }
-    }
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (mLocationClient != null) {
+			mLocationClient.disconnect();
+		}
+	}
 
-    private void setUpLocationClientIfNeeded() {
-        if (mLocationClient == null) {
-            mLocationClient = new LocationClient(
-                    getApplicationContext(),
-                    this,  // ConnectionCallbacks
-                    this); // OnConnectionFailedListener
-        }
-    }
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the map.
+		if (mMap == null) {
+			// Try to obtain the map from the SupportMapFragment.
+			mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+					.getMap();
+			// Check if we were successful in obtaining the map.
+			if (mMap != null) {
+				mMap.setMyLocationEnabled(true);
+				mMap.setOnMyLocationButtonClickListener(this);
+			}
+		}
+	}
 
-    /**
-     * Button to get current Location. This demonstrates how to get the current Location as required
-     * without needing to register a LocationListener.
-     */
-    public void showMyLocation(View view) {
-        if (mLocationClient != null && mLocationClient.isConnected()) {
-            String msg = "Location = " + mLocationClient.getLastLocation();
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-        }
-    }
+	private void setUpLocationClientIfNeeded() {
+		if (mLocationClient == null) {
+			mLocationClient = new LocationClient(
+					getApplicationContext(),
+					this,  // ConnectionCallbacks
+					this); // OnConnectionFailedListener
+		}
+	}
 
-    /**
-     * Implementation of {@link LocationListener}.
-     */
-    @Override
-    public void onLocationChanged(Location location) {
-        mMessageView.setText("Location = " + location);
-    }
+	/**
+	 * Button to get current Location. This demonstrates how to get the current Location as required
+	 * without needing to register a LocationListener.
+	 */
+	public void showMyLocation(View view) {
+		if (mLocationClient != null && mLocationClient.isConnected()) {
+			String msg = "Location = " + mLocationClient.getLastLocation();
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+		}
+	}
 
-    /**
-     * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
-     */
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        mLocationClient.requestLocationUpdates(
-                REQUEST,
-                this);  // LocationListener
-    }
+	/**
+	 * Implementation of {@link LocationListener}.
+	 */
+	@Override
+	public void onLocationChanged(Location location) {
+		new SendPost().execute();
+	}
 
-    /**
-     * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
-     */
-    @Override
-    public void onDisconnected() {
-        // Do nothing
-    }
+	/**
+	 * Callback called when connected to GCore. Implementation of {@link ConnectionCallbacks}.
+	 */
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		mLocationClient.requestLocationUpdates(
+				REQUEST,
+				this);  // LocationListener
+		Location location = mLocationClient.getLastLocation();
+		LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+		mMap.animateCamera(cameraUpdate);
+	}
 
-    /**
-     * Implementation of {@link OnConnectionFailedListener}.
-     */
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        // Do nothing
-    }
+	/**
+	 * Callback called when disconnected from GCore. Implementation of {@link ConnectionCallbacks}.
+	 */
+	@Override
+	public void onDisconnected() {
+		// Do nothing
+	}
 
-    @Override
-    public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
-        return false;
-    }
+	/**
+	 * Implementation of {@link OnConnectionFailedListener}.
+	 */
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// Do nothing
+	}
+
+	@Override
+	public boolean onMyLocationButtonClick() {
+		Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+		// Return false so that we don't consume the event and the default behavior still occurs
+		// (the camera animates to the user's current position).
+		return false;
+	}
+	
+	private class SendPost extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			String url = "http://192.168.1.8:8080/api/getRegionItems";
+		    URL obj = null;
+			try {
+				obj = new URL(url);
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		    HttpURLConnection con = null;
+			try {
+				con = (HttpURLConnection) obj.openConnection();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		    //add reuqest header
+		    try {
+				con.setRequestMethod("POST");
+			} catch (ProtocolException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		    //con.setRequestProperty("User-Agent", USER_AGENT);
+		    //con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		    con.setRequestProperty("Content-Type", "application/json");
+		    //con.setRequestProperty("Content-Length", "0");
+		    //con.setRequestProperty("Connection", "keep-alive");
+
+		    String query = "{ \"lat\": 40.5, \"lng\": -78.5 }";
+
+		    con.setDoOutput(true);
+		    con.setRequestProperty("Content-Length", 
+		      Integer.toString(query.length()));
+		    try {
+				con.getOutputStream().write(query.getBytes("UTF8"));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return null;
+		}
+	}
 }
