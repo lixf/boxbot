@@ -1,0 +1,53 @@
+{
+  "db": {
+    "url": "mongodb://127.0.0.1:27017/world"
+  },
+  "world": {
+    "regions": [
+      {
+        "rid": 1,
+        "name": "Pittsburgh",
+        "start_lat": 40.0,
+        "end_lat": 41.0,
+        "start_lng": -79.0,
+        "end_lng": -78.0
+      }
+    ]
+  },
+  "item_prototypes": {
+    "armour": [
+      {
+        "name": "Basic Armour",
+        "defense": 1,
+        "probability": 0.8,
+        "type": "armour"
+      },
+      {
+        "name": "Advanced Armour",
+        "defense": 2,
+        "probability": 0.2,
+        "type": "armour"
+      }
+    ],
+    "weapon": [
+      {
+        "name": "Basic Sword",
+        "attack": 1,
+        "probability": 0.7,
+        "type": "weapon"
+      },
+      {
+        "name": "Advanced Sword",
+        "attack": 2,
+        "probability": 0.2,
+        "type": "weapon"
+      },
+      {
+        "name": "Machine Gun",
+        "attack": 3000,
+        "probability": 0.1,
+        "type": "weapon"
+      }
+    ]
+  }
+}
