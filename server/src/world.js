@@ -16,10 +16,12 @@ function startSimulation () {
   // set up simulation  
   _.map(config.world.regions, function (region) {
     _.map(config.item_prototypes, function (list, item_type) {
-      // add new objects every 5 seconds
+      populateRegion(region, list, item_type)
+
+      // add new objects every 10 seconds
       setInterval(function () {
         populateRegion(region, list, item_type)
-      }, 5000);
+      }, 10000);
     });
   });
 }
@@ -71,14 +73,64 @@ function populateRegion(region, prototypes, item_type) {
     new_items.push(it);
   }
 
-  db.addItemsToRegion(region.rid, new_items);
+  db.addItemsToRegion(region.rid, new_items, function (err){
+  });
 }
 
 // client handlers
 
-function findItem (req, res) {
+function getRegionItems (req, res) {
+  if (!req || !req.body || !req.body.lat || !req.body.lng) {
+    res.status(400).end();
+    return;
+  }
+
+  db.getRegionByPosition(req.body.lat, req.body.lng, 
+    function (err, region) {
+      if (err) {
+        console.error(err);
+        res.status(500).end();
+        return;
+      }
+
+      if (!region) {
+        res.status(400).end();
+        return;
+      }
+
+      var items = db.getRegionItems(region.rid, function (err, items) {
+        if (err || !items) {
+          res.status(500).end();
+          return;
+        }
+
+        res.json({
+          region: region,
+          items: items
+        });
+      }); 
+    }
+  );
+}
+
+function claimItem (req, res) {
+  if (!req || !req.body || !req.body.uid || !req.body.iid || !req.body.rid) {
+    res.status(400).end();
+    return;
+  }
+
+  db.removeItemFromRegion(req.body.rid, req.body.uid, function (err) {
+    if (err) {
+      // item has been claimed
+      res.status(410).end();
+      return;
+    }
+    res.status(200).end();
+  });
 }
 
 module.exports = {
-  startSimulation: startSimulation
+  startSimulation: startSimulation,
+  getRegionItems: getRegionItems,
+  claimItem: claimItem
 }
