@@ -1,8 +1,5 @@
 package com.boxbot.android;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
