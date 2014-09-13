@@ -1,5 +1,6 @@
 /** db.js
  *  Handles data storage and retrieval
+ *  Currently only a mock, not backed up by real database.
  */
 
 var _ = require('lodash');
