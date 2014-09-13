@@ -3,19 +3,19 @@
  */
 
 var _ = require('lodash');
+var DB = require('./db.js');
+var uuid = require('node-uuid');
 
 var config = require('../config/config');
 
-// stores items currently in pittsburgh
-var pittsburgh = {
-  "armour": [],
-  "weapon": []
-};
+var db;
 
 function startSimulation () {
+  db = new DB(); 
+
   // set up simulation  
   _.map(config.world.regions, function (region) {
-    _.map(config.items, function (list, item_type) {
+    _.map(config.item_prototypes, function (list, item_type) {
       // add new objects every 5 seconds
       setInterval(function () {
         populateRegion(region, list, item_type)
@@ -32,45 +32,46 @@ function randomInt (low, high) {
   return Math.floor(Math.random() * (high - low) + low);
 }
 
-function populateRegion(region, items, item_type) {
+function populateRegion(region, prototypes, item_type) {
   // sort by ascending probability
-  var items = _.sortBy(items, function (p) {
+  prototypes = _.sortBy(prototypes, function (p) {
     return p.probability;
   });
 
   // create distribution
-  var dist = _.map(_.range(0, items.length), function (i) {
+  var dist = _.map(_.range(0, prototypes.length), function (i) {
     if (i == 0) {
-      return items[i];
+      prototypes[i].pvalue = prototypes[i].probability;
     } else {
-      items[i].probability += items[i-1].probability;
-      return items[i];
+      prototypes[i].pvalue = prototypes[i].probability + 
+        prototypes[i-1].pvalue;
     }
+    return prototypes[i];
   });
 
-  // create random number of items (up to 10)
+  // create random number of prototypes (up to 10)
   var num = randomInt(0, 10);
 
   // randomly generate locations and assign random item to each
-  var new_items = _.map(_.range(0, num), function (i) {
+  var new_items = [];
+  for (var i = 0; i < num; i++) {
     // figure out what prototype to use
     var prob = Math.random(0, 1);
-    var i = _.find(dist, function (p) {
-      return prob <= p.probability;
+    var it = _.find(dist, function (p) {
+      return prob <= p.pvalue;
     });
 
     // generate location
-    var lat = Math.random(region.start_lat, region.end_lat);
-    var lng = Math.random(region.start_lng, region.end_lng);
+    it.lat = Math.random(region.start_lat, region.end_lat);
+    it.lng = Math.random(region.start_lng, region.end_lng);
 
-    return {
-      'lat': lat,
-      'lng': lng,
-      'item': i
-    };
-  });
+    // create item id
+    it.iid = uuid.v4();
+    
+    new_items.push(it);
+  }
 
-  pittsburgh[item_type] = pittsburgh[item_type].concat(new_items);
+  db.addItemsToRegion(region.rid, new_items);
 }
 
 // client handlers

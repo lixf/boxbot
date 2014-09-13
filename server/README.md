@@ -25,6 +25,24 @@
 }
 ```
 
-## Objects
+## Prototypes
+```
+{
+  "name": "Basic Armour",
+  "type": "armour"
+  // type specific fields
+}
+```
 
-### Armour
+## Items
+Items are prototypes instantiated with longitude, lattitude, iid
+```
+{
+  "iid": "32a4fbed-676d-47f9-a321-cb2f267e2918",
+  "name": "Basic Armour",
+  "type": "armour",
+  "lat": 79.3
+  "lng": 32.4093
+  // type specific fields
+}
+```
