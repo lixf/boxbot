@@ -39,6 +39,15 @@ namespace BoxBotAlpha
         private bool moreDisplayed = false;
         private int animationCounter = 0;
 
+        private int activeTab = 0;
+        private enum ActiveTab
+        {
+            HomeTab,
+            MapTab,
+            InventoryTab,
+            FriendsTab
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -85,8 +94,27 @@ namespace BoxBotAlpha
             backgroundColor.Color = Color.FromArgb(0, 174, 174, 174);
             transparentColor.Color = Color.FromArgb(0, 0, 0, 0);
 
-            homeBotBounceStoryboard.Begin();
+            // navigate to the correct active tab
+            switch (activeTab)
+            {
+                case (int)ActiveTab.HomeTab:
+                    HomeButton_Tapped(null, null);
+                    break;
+                case (int)ActiveTab.MapTab:
+                    MapButton_Tapped(null, null);
+                    break;
+                case (int)ActiveTab.InventoryTab:
+                    InventoryButton_Tapped(null, null);
+                    break;
+                case (int)ActiveTab.FriendsTab:
+                    FriendsButton_Tapped(null, null);
+                    break;
+                default:
+                    break;
+            }
 
+
+            // testing code for drawing the bot
             Rectangle rect = new Rectangle();
             rect.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255));
             rect.Width = 50;
@@ -195,9 +223,17 @@ namespace BoxBotAlpha
             SettingsButtonOverlay.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Open the Home Tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HomeButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            activeTab = (int)ActiveTab.HomeTab;
+
             HomeView.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            MapView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             InventoryView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             FriendsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
@@ -207,9 +243,17 @@ namespace BoxBotAlpha
             homeBotBounceStoryboard.Begin();
         }
 
+        /// <summary>
+        /// Open the Map Tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MapButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            activeTab = (int)ActiveTab.MapTab;
+
             HomeView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            MapView.Visibility = Windows.UI.Xaml.Visibility.Visible;
             InventoryView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             FriendsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
@@ -217,9 +261,17 @@ namespace BoxBotAlpha
             homeBotBounceStoryboard.Stop();
         }
 
+        /// <summary>
+        /// Open the Inventory Tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InventoryButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            activeTab = (int)ActiveTab.InventoryTab;
+
             HomeView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            MapView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             InventoryView.Visibility = Windows.UI.Xaml.Visibility.Visible;
             FriendsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
@@ -229,9 +281,17 @@ namespace BoxBotAlpha
             inventoryBotBounceStoryboard.Begin();
         }
 
+        /// <summary>
+        /// Open the Friends Tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FriendsButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            activeTab = (int)ActiveTab.FriendsTab;
+
             HomeView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            MapView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             InventoryView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             FriendsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
@@ -240,7 +300,7 @@ namespace BoxBotAlpha
         }
 
         /// <summary>
-        /// Hide or Display extra settings
+        /// Hide or Display extra options
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -261,6 +321,9 @@ namespace BoxBotAlpha
          #                                     Helper Functions                                      #
          *###########################################################################################*/
 
+        /// <summary>
+        /// Animation code to pull up/down the extra settings menu.
+        /// </summary>
         private void showMenu()
         {
             moreDisplayed = true;
