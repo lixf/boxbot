@@ -1,0 +1,913 @@
+﻿<Page
+    x:Class="BoxBotAlpha.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BoxBotAlpha"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#AEAEAE">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="FriendsListTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- user profile pic -->
+                    <Image Source="/Shared/ShellContent/overworld.png" Stretch="UniformToFill"/>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+    
+    <Grid Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top HP Status Bar -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="14"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="14"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="14"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="14"/>
+            </Grid.RowDefinitions>
+            <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="0"/>
+            <Image Source="/Shared/ShellContent/LEdge.png" Grid.Row="0" Grid.Column="0"/>
+            <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="2"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.Column="2"/>
+            <Image Source="/Shared/ShellContent/BLCorner.png" Grid.Row="2" Grid.Column="0"/>
+            <Image Source="/Shared/ShellContent/BRCorner.png" Grid.Row="2" Grid.Column="2"/>
+
+            <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/LEdge.png" Grid.Row="1" Grid.Column="0" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.Column="2" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/BEdge.png" Grid.Row="2" Grid.Column="1" Stretch="Fill"/>
+            
+            <!-- Header Content -->
+            <Grid Grid.Row="1" Grid.Column="1" Margin="-3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- username -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="d337er" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                    <!-- health -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="HP" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" FontSize="20" FontWeight="Black" Foreground="#212121" Height="20" HorizontalAlignment="Center"/>
+                    <Rectangle Stroke="#212121" StrokeThickness="2" Grid.Column="1" Grid.Row="1" Fill="Transparent" Margin="4,0,10,0"/>
+                    <Rectangle Stroke="Transparent" StrokeThickness="8" Grid.Column="1" Grid.Row="1" Fill="#212121" Margin="4,0,10,0" HorizontalAlignment="Left" Width="200"/>
+                    <!-- experience -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="XP" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" FontSize="20" FontWeight="Black" Foreground="#212121" Height="20" HorizontalAlignment="Center"/>
+                    <Rectangle Stroke="#212121" StrokeThickness="2" Grid.Column="1" Grid.Row="3" Fill="Transparent" Margin="4,0,10,0"/>
+                    <Rectangle Stroke="Transparent" StrokeThickness="8" Grid.Column="1" Grid.Row="3" Fill="#212121" Margin="4,0,10,0" HorizontalAlignment="Left" Width="100"/>
+                    <!-- level -->
+                    <TextBlock Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Text="LVL.03" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" FontSize="40" FontWeight="Black" Foreground="#212121"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        
+        <!-- Content Area -->
+        <Grid Margin="0,5,0,0" Grid.Row="1">
+
+            <!-- Maps -->
+            <Grid x:Name="MapView" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="1" Grid.Column="1" Margin="-4" Source="/Shared/ShellContent/overworld.png" Stretch="UniformToFill" Opacity="0.75"/>
+
+                    <Image Grid.Row="0" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="2" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="1" Grid.Column="0" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+                    <Image Grid.Row="1" Grid.Column="2" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+
+                    <Image Grid.Row="0" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="0" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                </Grid>
+            </Grid>
+            
+            <!-- Home -->
+            <Grid x:Name="HomeView" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- bot view -->
+                    <Grid Grid.Row="1" Grid.Column="1" Margin="-4">
+                        <Rectangle Fill="#AEAEAE" Opacity="0.85"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Bot -->
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.Resources>
+                                        <Storyboard x:Name="homeBotBounceStoryboard">
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="Y"
+                                                Storyboard.TargetName="homeBotY"
+                                                AutoReverse="True" To="-10" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <ExponentialEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="Opacity"
+                                                Storyboard.TargetName="homeShadow"
+                                                AutoReverse="True" From="1.00" To="0.75" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                            </DoubleAnimation>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="homeShrinkBoxL"
+                                                Storyboard.TargetProperty="(Rectangle.Width)"
+                                                EnableDependentAnimation="True"
+                                                AutoReverse="True" From="30" To="50" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <ExponentialEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="homeShrinkBoxR"
+                                                Storyboard.TargetProperty="Width"
+                                                EnableDependentAnimation="True"
+                                                AutoReverse="True" From="30" To="50" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <ExponentialEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </Grid.Resources>
+
+                                    <Grid x:Name="HomeBotView" Grid.Row="0">
+                                        <Grid.RenderTransform>
+                                            <TranslateTransform x:Name="homeBotY" Y="5"/>
+                                        </Grid.RenderTransform>
+                                        <Rectangle x:Name="homeBot" Grid.Row="0" Fill="#212121" VerticalAlignment="Bottom" Width="80" Height="80"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Fill="Transparent" x:Name="homeShrinkBoxL" Height="30" Width="50" Grid.Column="0"/>
+                                        <Rectangle Fill="Transparent" x:Name="homeShrinkBoxR" Height="30" Width="50" Grid.Column="2"/>
+                                        <Image x:Name="homeShadow" Grid.Column="1" Source="/Shared/ShellContent/shadow_ellipse.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <!-- Stats -->
+                            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Orientation="Vertical" Margin="10,20,10,0">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="HEALTH" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="98/100" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,14" Opacity="0.75"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="EXPERIENCE" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="86/200" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,14" Opacity="0.75"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="ATTACK" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="24 (3)" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,14" Opacity="0.75"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="DEFENSE" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="10 (3)" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,14" Opacity="0.75"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="DURABILITY" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="8 (3)" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,14" Opacity="0.75"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <!-- border -->
+                    <Image Grid.Row="0" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="2" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="1" Grid.Column="0" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+                    <Image Grid.Row="1" Grid.Column="2" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+
+                    <Image Grid.Row="0" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="0" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                </Grid>
+            </Grid>
+            
+            <!-- Inventory -->
+            <Grid x:Name="InventoryView" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="14"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="14"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="14"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="14"/>
+                </Grid.RowDefinitions>
+                
+                <Rectangle Grid.Row="1" Grid.Column="1" Fill="#AEAEAE" Opacity="1.0" Margin="-4"/>
+                <Rectangle Grid.Row="3" Grid.Column="1" Fill="#AEAEAE" Opacity="0.85" Margin="-4"/>
+
+                <!-- block list -->
+                <Grid Grid.Row="1" Grid.Column="1" Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="INVENTORY" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,-4,0,4"/>
+                    <ListView Grid.Row="1"
+                        ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        ScrollViewer.ZoomMode="Disabled"
+                        Background="Transparent">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.Items>
+                            <ListViewItem>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Rectangle Grid.Column="0" Margin="4,0,6,0" Fill="#212121" Opacity="1.0"/>
+                                    <Rectangle Grid.Column="3" Margin="6,0,0,0" Fill="#212121" Opacity="1.0"/>
+
+                                    <Rectangle Grid.Column="1" Fill="#212121" Width="36" Height="36" Opacity="1.00"/>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="3" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Foreground="#AEAEAE" FontSize="20" FontWeight="Black" Margin="3,0,0,0"/>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="BLOCK No.1" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="ATTACK +1" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Rectangle Grid.Column="0" Margin="4,0,6,0" Fill="#212121" Opacity="1.0"/>
+                                    <Rectangle Grid.Column="3" Margin="6,0,0,0" Fill="#212121" Opacity="1.0"/>
+
+                                    <Rectangle Grid.Column="1" Fill="#212121" Width="36" Height="36" Opacity="0.75"/>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="1" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Foreground="#AEAEAE" FontSize="20" FontWeight="Black" Margin="3,0,0,0"/>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="BLOCK No.2" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="DEFENSE +1" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Rectangle Grid.Column="0" Margin="4,0,6,0" Fill="#212121" Opacity="1.0"/>
+                                    <Rectangle Grid.Column="3" Margin="6,0,0,0" Fill="#212121" Opacity="1.0"/>
+
+                                    <Rectangle Grid.Column="1" Fill="#212121" Width="36" Height="36" Opacity="0.25"/>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="7" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Foreground="#212121" FontSize="20" FontWeight="Black" Margin="3,0,0,0"/>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="BLOCK No.3" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="HEALTH +5" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Rectangle Grid.Column="0" Margin="4,0,6,0" Fill="#212121" Opacity="1.0"/>
+                                    <Rectangle Grid.Column="3" Margin="6,0,0,0" Fill="#212121" Opacity="1.0"/>
+
+                                    <Rectangle Grid.Column="1" Fill="#212121" Width="36" Height="36" Opacity="0.50"/>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="3" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Foreground="#AEAEAE" FontSize="20" FontWeight="Black" Margin="3,0,0,0"/>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="BLOCK No.4" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Text="DURABILITY +1" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                        </ListView.Items>
+                    </ListView>
+                </Grid>
+
+                <!-- bot view -->
+                <Grid Grid.Row="3" Grid.Column="1" Margin="-4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Bot -->
+                        <Grid Grid.Row="1" Margin="10,0,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.Resources>
+                                    <Storyboard x:Name="inventoryBotBounceStoryboard">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="Y"
+                                            Storyboard.TargetName="inventoryBotY"
+                                            AutoReverse="True" To="-10" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="Opacity"
+                                            Storyboard.TargetName="inventoryShadow"
+                                            AutoReverse="True" From="1.00" To="0.75" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="shrinkBoxL"
+                                            Storyboard.TargetProperty="(Rectangle.Width)"
+                                            EnableDependentAnimation="True"
+                                            AutoReverse="True" From="70" To="100" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="shrinkBoxR"
+                                            Storyboard.TargetProperty="Width"
+                                            EnableDependentAnimation="True"
+                                            AutoReverse="True" From="70" To="100" Duration="0:0:0.5" RepeatBehavior="Forever">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </Grid.Resources>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Fill="Transparent" x:Name="shrinkBoxL" Height="30" Width="70" Grid.Column="0"/>
+                                    <Rectangle Fill="Transparent" x:Name="shrinkBoxR" Height="30" Width="70" Grid.Column="2"/>
+                                    <Image x:Name="inventoryShadow" Grid.Column="1" Source="/Shared/ShellContent/shadow_ellipse.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
+                                </Grid>
+                                <Canvas x:Name="InventoryBotView" Grid.Row="0">
+                                    <Canvas.RenderTransform>
+                                        <TranslateTransform x:Name="inventoryBotY" Y="5"/>
+                                    </Canvas.RenderTransform>
+                                    <Rectangle x:Name="inventoryBot" Grid.Row="0" Fill="#212121" VerticalAlignment="Bottom" Width="100" Height="100"/>
+                                </Canvas>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                
+                <Grid Grid.Column="1" Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.ColumnSpan="4" Fill="#AEAEAE" Margin="-4"/>
+                    <!-- Stats -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="HP" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" TextAlignment="Center"/>
+                        <TextBlock Text="+20" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" Opacity="0.75" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="ATT" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" TextAlignment="Center"/>
+                        <TextBlock Text="+24" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" Opacity="0.75" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="DEF" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" TextAlignment="Center"/>
+                        <TextBlock Text="+10" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" Opacity="0.75" TextAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="DUR" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" TextAlignment="Center"/>
+                        <TextBlock Text="+8" Foreground="#212121" FontSize="20" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,0" Opacity="0.75" TextAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- border -->
+                <Image Grid.Row="0" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                <Image Grid.Row="2" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                <Image Grid.Row="4" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                <Image Grid.Row="6" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+                <Image Grid.Row="1" Grid.Column="2" Grid.RowSpan="5" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+
+                <Image Grid.Row="0" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="0" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="2" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="2" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="4" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="4" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="6" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                <Image Grid.Row="6" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+            </Grid>
+            
+            <!-- Friends -->
+            <Grid x:Name="FriendsView" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle Grid.Row="1" Grid.Column="1" Fill="#AEAEAE" Opacity="0.85" Margin="-4"/>
+
+                    <!-- list view -->
+                    <ListView x:Name="FriendsListView" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource FriendsListTemplate}">
+                        <ListView.Items>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="4" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="supsmartkid9" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ONLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 5" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="0" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="tsarevich" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="OFFLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4" Opacity="0.5"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 10" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="8" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="turret544" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ONLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 6" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="0" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="tate_potato" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ONLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 0" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="0" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="captianmmm" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ONLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 99" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="0" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="meteorodra" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ONLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 5" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <Grid Margin="10" HorizontalAlignment="Stretch" Width="{Binding ElementName=FriendsListView, Path=ActualWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- user profile pic -->
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="/Shared/ShellContent/friends_icon.png" Stretch="UniformToFill" Height="30" Width="30" Margin="0,0,6,0"/>
+                                    <!-- message count -->
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Bottom" Text="0" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="0,0,0,4"/>
+                                    <!-- username & status -->
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="SupremeCourt" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="1" Text="OFFLINE" Foreground="#212121" FontSize="14" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4" Opacity="0.5"/>
+                                    <!-- level -->
+                                    <TextBlock Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Text="LVL. 32" Foreground="#212121" FontSize="34" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated" Margin="10,0,0,4"/>
+                                </Grid>
+                            </ListViewItem>
+                        </ListView.Items>
+                    </ListView>
+
+                    <!-- border -->
+                    <Image Grid.Row="0" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="2" Grid.Column="1" Source="/Shared/ShellContent/window_horiz.png" Stretch="Fill" Margin="-5,0"/>
+                    <Image Grid.Row="1" Grid.Column="0" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+                    <Image Grid.Row="1" Grid.Column="2" Source="/Shared/ShellContent/window_vert.png" Stretch="Fill" Margin="0,-5"/>
+
+                    <Image Grid.Row="0" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="0" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="0" Source="/Shared/ShellContent/window_corner.png"/>
+                    <Image Grid.Row="2" Grid.Column="2" Source="/Shared/ShellContent/window_corner.png"/>
+                </Grid>
+                
+            </Grid>
+        </Grid>
+        
+        <!-- Base Tab Buttons -->
+        <Grid x:Name="NavigationTabs" Grid.Row="2" Background="#AEAEAE">
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="14"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="14"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="14"/>
+                </Grid.RowDefinitions>
+
+                <!-- Outlines -->
+                <Image Source="/Shared/ShellContent/TLCorner.png" Grid.Row="0" Grid.Column="0"/>
+                <Image Source="/Shared/ShellContent/TRCorner.png" Grid.Row="0" Grid.Column="18"/>
+                <Image Source="/Shared/ShellContent/LEdge.png" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.RowSpan="2" Grid.Column="18" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="5" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="9" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="13" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TEdge.png" Grid.Row="0" Grid.Column="17" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.Column="10" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="1" Grid.Column="14" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/BEdge.png" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="19" Stretch="Fill"/>
+                <Image Source="/Shared/ShellContent/TRCorner.png" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TLCorner.png" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TRCorner.png" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TLCorner.png" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TRCorner.png" Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TLCorner.png" Grid.Row="0" Grid.Column="11" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TRCorner.png" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="2"/>
+                <Image Source="/Shared/ShellContent/TLCorner.png" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="2"/>
+
+                <!-- Icons -->
+                <Image Source="/Shared/ShellContent/more_icon.png" Grid.Row="0" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="4" Stretch="None"/>
+                <Image Source="/Shared/ShellContent/map_icon.png" Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="5" Stretch="None"/>
+                <Image Source="/Shared/ShellContent/home_icon.png" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="4" Stretch="None"/>
+                <Image Source="/Shared/ShellContent/inventory_icon.png" Grid.Row="0" Grid.Column="7" Grid.RowSpan="3" Grid.ColumnSpan="5" Stretch="None"/>
+                <Image Source="/Shared/ShellContent/friends_icon.png" Grid.Row="0" Grid.Column="11" Grid.RowSpan="3" Grid.ColumnSpan="5" Stretch="None"/>
+
+                <!-- Button Tapped Overlay -->
+                <Grid x:Name="HomeButtonOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" Opacity="0.75" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Shared/ShellContent/TLFill.png" Grid.Row="0" Grid.Column="0"/>
+                    <Image Source="/Shared/ShellContent/TFill.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/TRFill.png" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="/Shared/ShellContent/LFill.png" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/CFill.png" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/RFill.png" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Stretch="Fill"/>
+                </Grid>
+                <Grid x:Name="MapButtonOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Grid.ColumnSpan="5" Opacity="0.75" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Shared/ShellContent/TLFill.png" Grid.Row="0" Grid.Column="0"/>
+                    <Image Source="/Shared/ShellContent/TFill.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/TRFill.png" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="/Shared/ShellContent/LFill.png" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/CFill.png" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/RFill.png" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Stretch="Fill"/>
+                </Grid>
+                <Grid x:Name="InventoryButtonOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="7" Grid.ColumnSpan="5" Opacity="0.75" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Shared/ShellContent/TLFill.png" Grid.Row="0" Grid.Column="0"/>
+                    <Image Source="/Shared/ShellContent/TFill.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/TRFill.png" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="/Shared/ShellContent/LFill.png" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/CFill.png" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/RFill.png" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Stretch="Fill"/>
+                </Grid>
+                <Grid x:Name="FriendsButtonOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="11" Grid.ColumnSpan="5" Opacity="0.75" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Shared/ShellContent/TLFill.png" Grid.Row="0" Grid.Column="0"/>
+                    <Image Source="/Shared/ShellContent/TFill.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/TRFill.png" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="/Shared/ShellContent/LFill.png" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/CFill.png" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/RFill.png" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Stretch="Fill"/>
+                </Grid>
+                <Grid x:Name="MoreButtonOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="15" Grid.ColumnSpan="4" Opacity="0.75" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="14"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Shared/ShellContent/TLFill.png" Grid.Row="0" Grid.Column="0"/>
+                    <Image Source="/Shared/ShellContent/TFill.png" Grid.Row="0" Grid.Column="1" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/TRFill.png" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="/Shared/ShellContent/LFill.png" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/CFill.png" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stretch="Fill"/>
+                    <Image Source="/Shared/ShellContent/RFill.png" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Stretch="Fill"/>
+                </Grid>
+
+                <!-- Click Targets -->
+                <Rectangle x:Name="HomeButton" Tapped="HomeButton_Tapped" PointerEntered="HomeButton_PointerEntered" PointerExited="HomeButton_PointerExited" Fill="Transparent" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+                <Rectangle x:Name="MapButton" Tapped="MapButton_Tapped" PointerEntered="MapButton_PointerEntered" PointerExited="MapButton_PointerExited" Fill="Transparent" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+                <Rectangle x:Name="InventoryButton" Tapped="InventoryButton_Tapped" PointerEntered="InventoryButton_PointerEntered" PointerExited="InventoryButton_PointerExited" Fill="Transparent" Grid.Row="0" Grid.Column="8" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+                <Rectangle x:Name="FriendsButton" Tapped="FriendsButton_Tapped" PointerEntered="FriendsButton_PointerEntered" PointerExited="FriendsButton_PointerExited" Fill="Transparent" Grid.Row="0" Grid.Column="12" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+                <Rectangle x:Name="MoreButton" Tapped="MoreButton_Tapped" PointerEntered="MoreButton_PointerEntered" PointerExited="MoreButton_PointerExited" Fill="Transparent" Grid.Row="0" Grid.Column="16" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            </Grid>           
+        </Grid>
+        
+        <!-- Extra Navigation Buttons -->
+        <Grid x:Name="NavigationMore" Grid.Row="3" Background="#AEAEAE" Margin="0,3,0,-214">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="14"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="14"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="14"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="14"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Labels -->
+            <Image Source="/Shared/ShellContent/BEdge.png" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="19" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/LEdge.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="18" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/BEdge.png" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="19" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image Source="/Shared/ShellContent/REdge.png" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <TextBlock Text="HOME" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Foreground="#212121" HorizontalAlignment="Center" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            <TextBlock Text="MAP" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="5" Foreground="#212121" HorizontalAlignment="Center" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            <TextBlock Text="INVENTORY" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="5" Foreground="#212121" HorizontalAlignment="Center" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            <TextBlock Text="FRIENDS" Grid.Row="0" Grid.Column="11" Grid.ColumnSpan="5" Foreground="#212121" HorizontalAlignment="Center" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            <TextBlock Text="MORE" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="4" Foreground="#212121" HorizontalAlignment="Center" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            
+            <!-- Buttons -->
+            <StackPanel Margin="-10,14,-10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="17" Orientation="Vertical">
+                <Grid>
+                    <TextBlock Text="SETTINGS" Margin="10,0,0,15" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+                    <Rectangle x:Name="SettingsButtonOverlay" Margin="0,-8,0,8" Fill="#212121" Opacity="0.75" Visibility="Collapsed"/>
+                    <Rectangle x:Name="SettingsButton" Margin="0,-8,0,8" Tapped="SettingsButton_Tapped" PointerEntered="SettingsButton_PointerEntered" PointerExited="SettingsButton_PointerExited" Fill="Transparent"/>
+                </Grid>
+                <TextBlock Text="OPTION NO.2" Margin="10,0,0,15" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+                <TextBlock Text="OPTION NO.3" Margin="10,0,0,15" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+                <TextBlock Text="OPTION NO.4" Margin="10,0,0,15" Foreground="#212121" FontSize="24" FontWeight="Black" FontFamily="/Shared/Fonts/pixelated.ttf#Pixelated"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
