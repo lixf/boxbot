@@ -91,14 +91,8 @@ public class BoxBotView extends View {
 			paint.setColor(Color.RED);
 			break;
 		}
-		int height = canvas.getHeight() - 50;
-		int width = canvas.getWidth() - 50;
-		int blockWidth = this.coordXMax - this.coordXMin;
-		int blockHeight = this.coordYMax - this.coordYMin;	
-		int offsetX = (int)((double)width - (double)blockWidth*(double)this.blockSize);
-		int offsetY = (int)((double)height - (double)blockHeight*(double)this.blockSize);
-		int blockOffsetX = offsetX + this.blockSize*block.coordX;
-		int blockOffsetY = offsetY + this.blockSize*block.coordY;
+		int blockOffsetX = this.centerX + this.blockSize*block.coordX;
+		int blockOffsetY = this.centerY + this.blockSize*block.coordY;
 		canvas.drawRect(blockOffsetX, blockOffsetY, blockOffsetX + this.blockSize, blockOffsetY + this.blockSize, paint);
 	}
 	
